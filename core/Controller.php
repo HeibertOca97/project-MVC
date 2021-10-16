@@ -1,36 +1,42 @@
-<?php namespace core;
+<?php
 
-use core\HelpView;
+namespace core;
 
-class Controller extends HelpView {
+use core\Request;
 
-    public $data;
+class Controller extends Request
+{
+    private $data;
 
-    public function __construct(){
-        $this->data = array();
+    public function __construct()
+    {
+        parent::__construct();
+        $this->data = [];
     }
 
-    function template($view){
+    public function template($view)
+    {
         $view = $this->strReplace($view);
-        foreach ($this->data as $id_assoc => $value) {
-            ${$id_assoc} = $value;
+        foreach ($this->data as $id_data => $value) {
+            ${$id_data} = $value;
         }
-        include PATH . "resources/" . $view . ".php"; 
+
+        require_once $this->content($view);
     }
 
-    public function view($view, $dataModel = array()) {
+    public function view($view, $data = [])
+    {
         $view = $this->strReplace($view);
-        $this->data = $dataModel;
-        // Forma 1
-        foreach ($dataModel as $id_assoc => $value) {
-            ${$id_assoc} = $value;
+        $this->data = $data;
+        foreach ($data as $id_data => $value) {
+            ${$id_data} = $value;
         }
-        // Forma 2
-        // extract($dataModel);
-        require_once "./resources/views/" . $view . ".php";
+
+        require_once $this->content($view);
     }
 
-    public function redirect($url = null){
+    public function redirect($url = null)
+    {
         header("Location: " . URL . $url);
     }
 }

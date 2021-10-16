@@ -1,18 +1,18 @@
-<?php namespace controllers;
+<?php
+
+namespace controllers;
 
 use core\Controller;
-use models\User;
 
-class HomeController extends Controller{
+class HomeController extends Controller
+{
 
-    public function index(){
-        // $u = new User(); // user data - database
+    public function index()
+    {
+        self::isGET();
 
-        return $this->view('home', [
-            'title' => "Home",
-            // 'username' => $u->username,
-            // 'persons' => $u->personas(),
+        $this->view('welcome', [
+            'title' => "Welcome to Home",
         ]);
     }
-
 }
