@@ -2,7 +2,7 @@
 
 <section class="welcome">
     <h1><?php print $title; ?></h1>
-    <p>Directory <strong>resources/welcome</strong></p>
+    <p>Directory <strong>resources/welcome</strong> </p>
 </section>
 
 

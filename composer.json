@@ -1,0 +1,18 @@
+{
+    "name": "heibert/mvc1",
+    "autoload": {
+        "psr-4": {
+            "Heibert\\Mvc1\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Heibert Ocaña",
+            "email": "heibertvts1997@gmail.com"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.5",
+        "vlucas/phpdotenv": "^5.3"
+    }
+}

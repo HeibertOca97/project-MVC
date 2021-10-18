@@ -1,5 +1,15 @@
 <?php
 
+require './vendor/autoload.php';
+
+try {
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+    $dotenv->load();
+} catch (\Throwable $th) {
+    print $th->getMessage();
+}
+
+
 $appRoute = "./public/index.php";
 
 if (file_exists($appRoute)) {
