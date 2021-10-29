@@ -1,10 +1,9 @@
 <?php
 
-define("APP", $_ENV['APP_NAME']);
 define('CONTROLLER_DEFAULT', "Home");
 define('METHOD_DEFAULT', "index");
-define('URL', $_ENV['APP_URL']);
 define('PATH', $_SERVER['DOCUMENT_ROOT'] . "/www/backend/php/mvc1/");
+date_default_timezone_set("America/Bogota"); //Bogota - La_Paz
 
 error_reporting(E_ALL);
 ini_set('ignore_repeated_errors', TRUE);

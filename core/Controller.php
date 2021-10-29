@@ -3,6 +3,8 @@
 namespace core;
 
 use core\Request;
+use core\Auth;
+use core\App;
 
 class Controller extends Request
 {
@@ -12,6 +14,7 @@ class Controller extends Request
     {
         parent::__construct();
         $this->data = [];
+        new Auth();
     }
 
     public function template($view)
@@ -37,6 +40,34 @@ class Controller extends Request
 
     public function redirect($url = null)
     {
-        header("Location: " . URL . $url);
+        header("Location: " . App::config('app.url') . $url);
+    }
+
+    protected function Auth()
+    {
+        if (!Auth::checkAuth()) {
+            $this->redirect('login');
+        }
+    }
+
+    protected function Guest()
+    {
+        if (Auth::checkAuth()) {
+            $this->redirect('dashboard');
+        }
+    }
+
+    public function AuthCheck()
+    {
+        if (Auth::checkAuth()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function AuthUser()
+    {
+        return Auth::user();
     }
 }
