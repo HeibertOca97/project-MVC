@@ -18,7 +18,7 @@ class HelpRoute
 
     public function requestRoute($controller = null)
     {
-        if ($this->controller == $controller) {
+        if (strcasecmp($this->controller, $controller) === 0) {
             return true;
         }
 

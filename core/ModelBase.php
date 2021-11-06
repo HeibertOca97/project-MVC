@@ -34,6 +34,24 @@ class ModelBase extends Connection
         return $this->json($resultSet);
     }
 
+    public function getBy($property, $value)
+    {
+        $result = $this->connection()->query("SELECT * FROM {$this->table} WHERE $property='$value' LIMIT 1");
+
+        return $result->fetch_object();
+    }
+
+    public function checkUnique($property, $value)
+    {
+        $resultSet = $this->db->query("SELECT * FROM {$this->table} WHERE $property='$value' LIMIT 1");
+
+        if ($resultSet->num_rows > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function json($result)
     {
         return json_decode(json_encode($result));

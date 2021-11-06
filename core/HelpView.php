@@ -9,6 +9,11 @@ class HelpView extends HelpRoute
 {
     private $path;
 
+    public static function redirect($url = null)
+    {
+        header("Location: " . App::config('app.url') . $url);
+    }
+
     public function assets($dir)
     {
         $strPathUrl = App::config('app.url') . "public/" . $dir;
@@ -87,11 +92,20 @@ class HelpView extends HelpRoute
         setcookie("error_$nameInput", $ruleArray[$type], strtotime('3 second'));
     }
 
-    public function getError($nameInput)
+    public function getMessageError($nameInput)
     {
         if ($_COOKIE["error_$nameInput"]) {
             return $_COOKIE["error_$nameInput"];
         }
+    }
+
+    public function getStateError($nameInput)
+    {
+        if ($_COOKIE["error_$nameInput"]) {
+            return true;
+        }
+
+        return false;
     }
 
     //RECOVERY VALUE OLD
@@ -105,7 +119,7 @@ class HelpView extends HelpRoute
     {
         if ($bool) {
             foreach ($_POST as $key => $value) {
-                // setcookie($key, "", strtotime('3 second'));
+                // setcookie($key, "", strtotime('-3 second'));
                 setcookie($key, "", time() - 60);
             }
         } else {

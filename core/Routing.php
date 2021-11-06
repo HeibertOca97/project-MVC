@@ -46,16 +46,16 @@ class Routing
     private function launchController($controller)
     {
         $controller = ucwords($controller) . "Controller";
-        $strFileController = "./controllers/" . $controller . '.php';
+        $strFileController = "./app/controllers/" . $controller . '.php';
 
         if (!file_exists($strFileController)) {
-            $strFileController = './controllers/' . CONTROLLER_DEFAULT . 'Controller.php';
+            $strFileController = './app/controllers/' . CONTROLLER_DEFAULT . 'Controller.php';
         }
 
         $controllerObj = null;
         try {
             require_once $strFileController;
-            $controller = "controllers\\" . $controller;
+            $controller = "app\\controllers\\" . $controller;
             $controllerObj = new $controller;
         } catch (\Throwable $th) {
             $controllerObj = $this->getControllerError();
@@ -86,9 +86,9 @@ class Routing
     private function getControllerError()
     {
         $controller = "ErrorController";
-        $strFileController = "./controllers/" . $controller . '.php';
+        $strFileController = "./app/controllers/" . $controller . '.php';
         require_once $strFileController;
-        $controller = "controllers\\" . $controller;
+        $controller = "app\\controllers\\" . $controller;
         $controllerObj = new $controller;
         return $controllerObj;
     }

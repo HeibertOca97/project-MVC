@@ -1,11 +1,11 @@
 <?php
 
-namespace controllers;
+namespace app\controllers;
 
 use core\Controller;
 use core\Auth;
-use models\User;
 use core\Logger;
+use app\models\User;
 
 class LoginController extends Controller
 {
@@ -17,6 +17,7 @@ class LoginController extends Controller
 
     public function index()
     {
+        self::isGET();
         $this->view("auth.login");
     }
 
@@ -24,7 +25,6 @@ class LoginController extends Controller
     {
         self::isPOST();
         $this->setRequestOldPost();
-
         $user = new User();
         try {
             if (!$this->input('email') && !$this->input('password')) {

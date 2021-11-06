@@ -35,4 +35,19 @@ class Auth
         unset($_SESSION[self::$nameSession]);
         session_destroy();
     }
+
+    public static function createSession($name, $value)
+    {
+        $_SESSION[$name] = $value;
+    }
+
+    public static function getSession($name)
+    {
+        return $_SESSION[$name];
+    }
+
+    public static function clearSession($name)
+    {
+        unset($_SESSION[$name]);
+    }
 }

@@ -1,16 +1,16 @@
 <?php
 
-namespace mail;
+namespace app\mail;
 
 use libs\Mailer;
 use core\App;
 
-class TestMail extends Mailer
+class ResetMail extends Mailer
 {
     public function __construct($strRouteTemplate, $data)
     {
         $this->initMailer();
-        $this->setSubject("Asunto de la notificacion del mail : TestMail");
+        $this->setSubject("Password Reset");
         $html = self::templateView($strRouteTemplate, $data);
         $this->setTemplateMail($html);
     }
@@ -22,8 +22,8 @@ class TestMail extends Mailer
         $html = file_get_contents('./resources/' . $strView . '.php');
 
         $html = str_replace('{{$appname}}', App::config('app.name'), $html);
-        $html = str_replace('{{$subject}}', $strData['subject'], $html);
-        $html = str_replace('{{$message}}', $strData['message'], $html);
+        $html = str_replace('{{$user}}', $strData['user'], $html);
+        $html = str_replace('{{$url}}', $strData['url'], $html);
         $html = str_replace('{{$anio}}', $strData['anio'], $html);
 
         return $html;

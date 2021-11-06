@@ -4,7 +4,6 @@ namespace core;
 
 use core\Request;
 use core\Auth;
-use core\App;
 
 class Controller extends Request
 {
@@ -36,11 +35,6 @@ class Controller extends Request
         }
 
         require_once $this->content($view);
-    }
-
-    public function redirect($url = null)
-    {
-        header("Location: " . App::config('app.url') . $url);
     }
 
     protected function Auth()
