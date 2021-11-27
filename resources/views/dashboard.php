@@ -10,5 +10,5 @@
     </main>
 </section>
 
-<script src="<?php $this->assets("src/js/app.js"); ?>"></script>
+<script src="<?php $this->assets("src/js/app.bundle.js"); ?>"></script>
 <?php $this->template("layouts.partials.endHTML"); ?>

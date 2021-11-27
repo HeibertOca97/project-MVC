@@ -40,7 +40,7 @@ class HelpView extends HelpRoute
 
     protected function content($dir)
     {
-        $strPathUrl = PATH . "resources/" . $dir . ".php";
+        $strPathUrl = PATH . "resources/views/" . $dir . ".php";
         return $strPathUrl;
     }
 

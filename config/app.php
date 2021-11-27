@@ -3,7 +3,7 @@
 return array(
     'APP' => array(
         "NAME" => $_ENV['APP_NAME'],
-        "URL" => $_ENV['APP_URL']
+        "URL" => $_ENV['APP_URL'],
     ),
 
     'MAIL' => array(
