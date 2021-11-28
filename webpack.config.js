@@ -31,10 +31,7 @@ module.exports = {
                 exclude: /node_modules/,
                 use:'ts-loader'
             },
-            {
-                //option 1: /\.s[ac]ss$/i  
-                //option 2: /\.css$/i
-                //option 3: /\.(css|s[ac]ss)$/i 
+            { 
                 test: /\.(css|s[ac]ss)$/i,
                 use: [
                     MiniCssExtractPlugin.loader,

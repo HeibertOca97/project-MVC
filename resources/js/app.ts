@@ -3,17 +3,19 @@ const btnBar: any = document.getElementById("btn-navbar"),
     btnMas: any = document.getElementById("btn-mas"),
     listBoxLink: any = document.querySelectorAll(".link-action");
 
-const toggleStyleAppSection = (widthElement1: string, widthElement2: string) => {
+const toggleStyleAppSection = (widthElement1: number, widthElement2: number) => {
     const appSection: any = document.querySelector("#app-section");
-    appSection.style.gridTemplateColumns = `${widthElement1} ${widthElement2}`;
+    appSection.children[0].style.width = `${widthElement1}px`;
+    appSection.children[0].style.minWidth = `${widthElement1}px`;
+    appSection.children[1].style.width = `${widthElement2}%`;
 }
 
 function windowResize() {
     if (window.innerWidth < 361) {
-        toggleStyleAppSection('0px', '1fr');
+        toggleStyleAppSection(0, 100);
         stateBar(btnBar, false);
     } else {
-        toggleStyleAppSection('250px', '1fr');
+        toggleStyleAppSection(250, 100);
         stateBar(btnBar, true);
     }
 }
@@ -35,10 +37,10 @@ btnBar.addEventListener('click', handleToggleNavbar);
 function handleToggleNavbar() {
     if (btnBar.getAttribute("data-state") == "false") {
         stateBar(btnBar, true);
-        toggleStyleAppSection('250px', '1fr');
+        toggleStyleAppSection(250, 100);
     } else {
         stateBar(btnBar, false);
-        toggleStyleAppSection('0px', '1fr');
+        toggleStyleAppSection(0, 100);
     }
     closeNavbarModalOption();
 }
@@ -99,7 +101,3 @@ function closeNavbarModalOption() {
     });
 }
 
-//Cargar datos de API de prueba
-fetch('https://jsonplaceholder.typicode.com/todos')
-  .then(response => response.json())
-  .then(json => console.log(json))

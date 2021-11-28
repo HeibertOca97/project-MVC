@@ -328,18 +328,25 @@ body {
 
 .section-1 {
     height: 100vh;
-    display: grid;
-    grid-template-columns: 0px 100%;
+    display: flex;
+    align-items: stretch;
+    justify-content: between;
     z-index: 25;
     position: relative;
 }
 
 .navbar-bd, .main-bd {
-    overflow: auto;
     transition: all 250ms ease-in;
 }
 
+.main-bd{
+    overflow: auto;
+    width:100%;
+}
+
 .navbar-bd {
+    overflow: hidden;
+    width: 0%;
     background-color: var(--cl-pd);
     box-shadow: 0px 5px 15px rgba(185, 185, 185, 0.411);
 }

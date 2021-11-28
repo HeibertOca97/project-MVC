@@ -57,7 +57,7 @@ class HelpView extends HelpRoute
 
     protected function json($array)
     {
-        return json_decode(json_encode($array));
+        return json_encode($array);
     }
 
     // METHOD FILE
