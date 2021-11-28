@@ -5,8 +5,8 @@ module.exports = {
     //mode: "production", // "production" | "development" | "none"
     entry: {
         app: [
-            "@babel/polyfill",
-            "./resources/js/app.js",
+            //"@babel/polyfill", // Syntax JS
+            "./resources/js/app.ts",
             "./resources/sass/app.scss"
         ],
     },
@@ -15,7 +15,7 @@ module.exports = {
         filename: "src/js/[name].bundle.js"
     },
     resolve: {
-        extensions: ['.js', '.css', '.scss']
+        extensions: ['.js', '.ts']
     },
     module: {
         rules: [
@@ -25,6 +25,11 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                 }
+            },
+            {
+                test: /\.ts$/i,
+                exclude: /node_modules/,
+                use:'ts-loader'
             },
             {
                 //option 1: /\.s[ac]ss$/i  
