@@ -2,7 +2,7 @@
 
 define('CONTROLLER_DEFAULT', "Home");
 define('METHOD_DEFAULT', "index");
-define('PATH', $_SERVER['DOCUMENT_ROOT'] . "/www/backend/php/mvc1/");
+define('PATH', $_SERVER['DOCUMENT_ROOT'] . "/web_project/project-MVC/");
 date_default_timezone_set("America/Bogota"); //Bogota - La_Paz
 
 error_reporting(E_ALL);
