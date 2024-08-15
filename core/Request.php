@@ -2,37 +2,41 @@
 
 namespace core;
 
-use core\HelpView;
-use core\App;
+use core\RouterView;
+use core\help\RequestMethod;
 
-class Request extends HelpView
+class Request
 {
+    use RequestMethod, RouterView;
 
-    protected function inputFile($filename)
-    {
-        if (isset($_FILES[$filename])) {
-            return $this->json($_FILES[$filename]);
-        }
+    private $fields;
+    
+    protected function rules($type, $nameInput){
+        $ruleArray = [
+            "required" => "Campo $nameInput obligatorio.",
+            "unique" => "Ya existe un registro con este dato."
+        ];
+
+        return $ruleArray[$type];
     }
 
-    protected function input($inputName)
-    {
-        if (isset($_POST[$inputName])) {
-            return $this->json($_POST[$inputName]);
+    protected function setFields(array $fields){
+        $requests = [];
+
+        foreach ($fields as $key => $item){
+            if($item[1] == "file"){
+                $requests[$item[0]] = $this->file($item[0]);
+            } 
+            if($item[1] == "input"){
+                $requests[$item[0]] = $this->input($item[0]);
+            } 
         }
+
+        $this->fields = json_decode(json_encode($requests));
     }
 
-    protected static function isPOST()
-    {
-        if ($_SERVER['REQUEST_METHOD'] == "GET") {
-            header("Location: " . App::config('app.url'));
-        }
+    public function getFields(){
+        return $this->fields;
     }
 
-    protected static function isGET()
-    {
-        if ($_SERVER['REQUEST_METHOD'] == "POST") {
-            header("Location: " . App::config('app.url'));
-        }
-    }
 }

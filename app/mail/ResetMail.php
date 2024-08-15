@@ -4,28 +4,26 @@ namespace app\mail;
 
 use libs\Mailer;
 use core\App;
+use core\help\ControllerHelp;
+use core\RouterView;
 
 class ResetMail extends Mailer
 {
-    public function __construct($strRouteTemplate, $data)
+    use ControllerHelp, RouterView;
+
+    public function __construct(string $email, string $strView, $data)
     {
         $this->initMailer();
-        $this->setSubject("Password Reset");
-        $html = self::templateView($strRouteTemplate, $data);
-        $this->setTemplateMail($html);
+        $this->setSubject("Password Reset - " . App::config('app.name'));
+        $this->to($email);
+        $detail = [
+            "anio" => (date("Y")), 
+            "appname" => App::config("app.name"),
+            "urlblog" => App::config("app.url") . "blog",
+            "logotype" => $this->storage("public/logo192.png"),
+        ];
+        $data = array_merge($detail, $data); 
+        $this->setTemplateMail($this->getHTMLBufferView($strView, $data));
     }
 
-    private static function templateView($strView, $strData)
-    {
-        $strView =  str_replace('.', '/', $strView);
-
-        $html = file_get_contents('./resources/' . $strView . '.php');
-
-        $html = str_replace('{{$appname}}', App::config('app.name'), $html);
-        $html = str_replace('{{$user}}', $strData['user'], $html);
-        $html = str_replace('{{$url}}', $strData['url'], $html);
-        $html = str_replace('{{$anio}}', $strData['anio'], $html);
-
-        return $html;
-    }
 }

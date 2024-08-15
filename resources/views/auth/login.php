@@ -2,22 +2,22 @@
 <?php $this->template("layouts.partials.header"); ?>
 
 <section class="container-1 box-section box-center">
-    <form action="<?php $this->route("login/signin") ?>" method="post" class="fr-login">
+    <form action="<?= $this->route("login/signin") ?>" method="post" class="fr-login">
         <h2 class="fr-title">Inicio de sesion</h2>
-        <?php if ($this->getStateAlert("warning")) { ?>
-            <p class="alerts alert-warn"><small><?= $this->getMessageAlert("warning"); ?></small> </p>
-        <?php } ?>
+        <?php if ($this->checkMessageFlash("warning")): ?>
+            <?= $this->getMessageFlash("warning") ?>
+        <?php endif; ?>
         <div class="group-input">
             <input type="email" name="email" placeholder="Email" autocomplete="off" value="<?= $this->old("email"); ?>">
-            <?php if ($this->getStateError("email")) { ?>
-                <p class="alerts alert-warn"><small><?= $this->getMessageError("email"); ?></small></p>
-            <?php } ?>
+            <?php if($this->checkStateError("email")): ?>
+            <?= $this->getErrorMessage("email") ?>
+            <?php endif; ?>
         </div>
         <div class="group-input">
             <input type="password" name="password" placeholder="Password" autocomplete="off" value="<?= $this->old("password"); ?>">
-            <?php if ($this->getStateError("password")) { ?>
-                <p class="alerts alert-warn"><small><?= $this->getMessageError("password"); ?></small></p>
-            <?php } ?>
+            <?php if($this->checkStateError("password")): ?>
+            <?= $this->getErrorMessage("password") ?>
+            <?php endif; ?>
         </div>
         <div class="group-input">
             <small><a href="<?= $this->route('resetPassword'); ?>" class="links link-item">Has olvidado tu contraseña?</a></small>

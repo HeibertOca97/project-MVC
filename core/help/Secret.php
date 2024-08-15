@@ -1,13 +1,12 @@
 <?php
 
-namespace core;
+namespace core\help;
 
-class Secret
+trait Secret
 {
-    public static function bscrypt($str)
+    public static function bscrypt(string $str)
     {
         $hash = password_hash($str, PASSWORD_DEFAULT, ["cost" => 10]);
-
         return $hash;
     }
 

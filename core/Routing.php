@@ -2,94 +2,128 @@
 
 namespace core;
 
+use core\help\RouteControllerFile;
+use core\help\Logger;
+
 class Routing
 {
+    use RouteControllerFile;
 
-    private $url, $controller, $method, $params;
+    private $url, $controller, $method, $params, $directory = "app/controllers/";
 
     public function __construct()
     {
+        $this->directory = "app/controllers/";
         $this->run();
     }
 
     public function run()
     {
-        if (isset($_GET['url'])) {
-            $this->url = $_GET['url'];
-        }
+        try{
+            if (isset($_GET['url'])) {
+                $this->url = $_GET['url'];
+            }
 
-        if (!empty($this->url)) {
-            $this->url = explode('/', $this->url);
+            if (!empty($this->url)) {
+                $this->url = explode('/', $this->url);
 
-            $this->controller = $this->url[0];
-            array_shift($this->url);
-
-            if (isset($this->url[0]) && !empty($this->url[0])) {
-                $this->method = $this->url[0];
+                $this->controller = $this->url[0];
                 array_shift($this->url);
+
+                if (isset($this->url[0]) && !empty($this->url[0])) {
+                    $this->method = $this->url[0];
+                    array_shift($this->url);
+                } else {
+                    $this->method = METHOD_DEFAULT;
+                }
+
+                if (count($this->url) > 0) {
+                    $this->params = $this->url;
+                }
             } else {
+                $this->controller = CONTROLLER_DEFAULT;
                 $this->method = METHOD_DEFAULT;
             }
-
-            if (count($this->url) > 0) {
-                $this->params = $this->url;
-            }
-        } else {
-            $this->controller = CONTROLLER_DEFAULT;
-            $this->method = METHOD_DEFAULT;
+            
+            $controllerObj = $this->launchController($this->controller);
+            $this->launchMethod($controllerObj);
+        }catch(\Exception $err){
+            Logger::error($err->getMessage());
+            throw new \Exception($err->getMessage());
+            $controllerObj = $this->launchController("error");
+            $this->launchMethod($controllerObj);
         }
-
-        $controllerObj = $this->launchController($this->controller);
-        $this->launchMethod($controllerObj);
     }
 
     private function launchController($controller)
     {
-        $controller = ucwords($controller) . "Controller";
-        $strFileController = "./app/controllers/" . $controller . '.php';
+        try{
+            $nameController = ucwords($controller);
+            $errorController = ucwords("Error");
+            $path = "./" . $this->directory;
+            $namespace = $this->directory;
+            $getDirectory = $this->createAnArrayOfDirectories($path, $namespace);
+            array_push($getDirectory, array(
+                "path" => $path,
+                "namespace" => $namespace
+            ));
 
-        if (!file_exists($strFileController)) {
-            $strFileController = './app/controllers/' . CONTROLLER_DEFAULT . 'Controller.php';
+            if (isset($getDirectory)) {
+                $getController = [];
+
+                foreach ($getDirectory as $directory) {
+                    $getRootFileName = $this->getPathOfControllerAndNameSpace($directory['namespace'], $nameController);
+
+                    if (empty($getRootFileName)) {
+                        $getRootFileName = $this->getPathOfControllerAndNameSpace($directory['namespace'], $errorController);
+                    }
+
+                    if (isset($getRootFileName)) {
+                        $getController = $getRootFileName;
+                        break;
+                    }
+                }
+                
+                require_once "./" . $getController['path'];
+                $controllerObj = new $getController['namespace'];
+                return $controllerObj;
+            }
+
+            return null;
+        }catch(\Exception $err){
+            Logger::error($err->getMessage());
+            throw new \Exception("An error has occurred in the method \"launchController\" ");
         }
 
-        $controllerObj = null;
-        try {
-            require_once $strFileController;
-            $controller = "app\\controllers\\" . $controller;
-            $controllerObj = new $controller;
-        } catch (\Throwable $th) {
-            $controllerObj = $this->getControllerError();
-        } finally {
-            return $controllerObj;
-        }
     }
 
     private function launchMethod($controllerObj)
     {
-        if (isset($this->method) && method_exists($controllerObj, $this->method)) {
-            $this->loadAction($controllerObj, $this->method);
-        } else {
-            $controllerObj = $this->getControllerError();
-            $this->loadAction($controllerObj, METHOD_DEFAULT);
+        try{
+            if (isset($this->method) && method_exists($controllerObj, $this->method)) {
+                $this->loadAction($controllerObj, $this->method);
+            } else {
+                $this->loadAction($controllerObj, 'error');
+            }
+        }catch(\Exception $err){
+            Logger::error($err->getMessage());
+            throw new \Exception("An error has occurred in the method \"launchMethod\" ");
         }
+
     }
 
     public function loadAction($controllerObj, $action)
     {
-        if (isset($this->params)) {
-            call_user_func_array(array($controllerObj, $action), $this->params);
-        } else {
-            call_user_func(array($controllerObj, $action));
+        try{
+            if (isset($this->params)) {
+                call_user_func_array(array($controllerObj, $action), $this->params);
+            } else {
+                call_user_func(array($controllerObj, $action));
+            }
+        }catch(\Exception $err){
+            Logger::error($err->getMessage());
+            throw new \Exception("An error has occurred in the method \"loadAction\" ");
         }
-    }
 
-    private function getControllerError()
-    {
-        $controller = "ErrorController";
-        $strFileController = "./app/controllers/" . $controller . '.php';
-        require_once $strFileController;
-        $controller = "app\\controllers\\" . $controller;
-        $controllerObj = new $controller;
-        return $controllerObj;
     }
 }

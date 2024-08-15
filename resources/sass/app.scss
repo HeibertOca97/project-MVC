@@ -268,7 +268,7 @@ body {
     box-sizing: border-box;
 }
 
-.alert-warn::before, .alert-succ::before {
+.alert-error::before, .alert-success::before {
     content: "";
     width: 3px !important;
     height: 100%;
@@ -277,20 +277,20 @@ body {
     left: 0;
 }
 
-.alert-warn::before {
+.alert-error::before {
     background-color: rgb(233, 43, 43);
 }
 
-.alert-warn {
+.alert-error {
     color: rgb(233, 43, 43);
     background-color: rgba(233, 43, 43, 0.061);
 }
 
-.alert-succ::before {
+.alert-success::before {
     background-color: rgb(22, 207, 37);
 }
 
-.alert-succ {
+.alert-success {
     color: rgb(22, 207, 37);
     background-color: rgba(22, 207, 37, 0.061);
 }

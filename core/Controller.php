@@ -4,64 +4,41 @@ namespace core;
 
 use core\Request;
 use core\Auth;
+use core\help\CheckRoute;
+use core\help\ControllerHelp;
 
 class Controller extends Request
 {
-    private $data;
+    use CheckRoute, ControllerHelp;
+
+    private $data = [];
 
     public function __construct()
     {
-        parent::__construct();
-        $this->data = [];
         new Auth();
     }
-
-    public function template($view)
-    {
-        $view = $this->strReplace($view);
-        foreach ($this->data as $id_data => $value) {
-            ${$id_data} = $value;
-        }
-
-        require_once $this->content($view);
-    }
-
-    public function view($view, $data = [])
-    {
-        $view = $this->strReplace($view);
-        $this->data = $data;
-        foreach ($data as $id_data => $value) {
-            ${$id_data} = $value;
-        }
-
-        require_once $this->content($view);
-    }
-
-    protected function Auth()
-    {
-        if (!Auth::checkAuth()) {
-            $this->redirect('login');
-        }
-    }
-
-    protected function Guest()
-    {
-        if (Auth::checkAuth()) {
-            $this->redirect('dashboard');
-        }
-    }
-
+    
     public function AuthCheck()
     {
-        if (Auth::checkAuth()) {
-            return true;
-        }
-
+        if (Auth::checkAuth()) return true;
         return false;
     }
 
     public function AuthUser()
     {
         return Auth::user();
+    }
+
+    public function getSessionValue($session_name, $property_name){
+        return Auth::getSession($session_name)[$property_name];
+    }
+
+    public function error()
+    {
+        $error = "404 | This page could not be found.";
+        $this->view('error.error', [
+            'title' => $error,
+            'message' => $error
+        ]);
     }
 }

@@ -13,6 +13,7 @@ class Mailer
     private $email, $host, $userEmail, $userPass, $port, $appname;
     private $fromEmail, $fromName;
     private $html, $subject;
+    protected static $template_path = "./resources/views/";
 
     public function initMailer()
     {
@@ -71,25 +72,37 @@ class Mailer
             $emailFrom = $this->fromEmail == null ? $this->userEmail : $this->fromEmail;
             $nameFrom = $this->fromName == null ? $this->appname : $this->fromName;
             //Recipients
-            $this->mail->addAddress($this->email); //Add a recipient
+            if(is_array($this->email)){
+                for($i = 0; $i < count($this->email); $i++){
+                    $this->mail->addAddress($this->email[$i]); //Add a recipient
+                }
+            }else{
+                $this->mail->addAddress($this->email); //Add a recipient
+            }
             $this->mail->setFrom($emailFrom, $nameFrom);
 
             //Content
             $this->mail->isHTML(true); //Set email format to HTML
+            $this->mail->CharSet = 'UTF-8';
             $this->mail->Subject = $this->subject;
             $this->mail->Body = $this->getTemplateMail();
 
             $this->mail->send();
-
-            return array(
+            //$intentos=1; 
+            //while((!$exito)&&($intentos<5)&&($this->mail->ErrorInfo!="SMTP Error: Data not accepted")){
+                //sleep(5);
+                //$exito = $this->mail->Send();
+                //$intentos=$intentos+1;                
+            //}
+            return json_decode(json_encode(array(
                 "message" => 'Mensaje enviado correctamente',
-                "success" => true
-            );
+                "success" => true,
+            )));
         } catch (Exception $e) {
-            return array(
-                "message" => "Mailer Error: {$this->mail->ErrorInfo}",
-                "success" => false
-            );
+            return json_decode(json_encode(array(
+                "message" => "{$this->mail->ErrorInfo}",
+                "success" => false,
+            )));
         }
     }
 }

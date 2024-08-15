@@ -2,11 +2,13 @@
 
 namespace app\middleware;
 
-use core\HelpView;
+use core\RouterView;
 use core\Auth;
 
-class UserDataIsComplete extends HelpView
+class UserDataIsComplete
 {
+    use RouterView;
+    
     public static function handle()
     {
         if (Auth::user()->username == null) {

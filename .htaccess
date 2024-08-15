@@ -1,7 +1,12 @@
 RewriteEngine On
 
+# Redirigir a HTTPS si no está utilizando HTTPS
+#RewriteCond %{HTTP:X-Forwarded-Proto} !https [OR]
+#RewriteCond %{HTTPS} off
+#RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-l
 
-RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
+RewriteRule ^([^?]*)(\?.*)?$ index.php?url=$1 [QSA,L]

@@ -102,6 +102,14 @@ function closeNavbarModalOption() {
 }
 
 //Cargar datos de API de prueba
-fetch('https://jsonplaceholder.typicode.com/todos')
+fetch('https://jsonplaceholder.typicode.com/users')
   .then(response => response.json())
-  .then(json => console.log(json))
+  .then(json => {
+    const card = document.getElementById("card-db");
+    let el = "<ul>";
+    for (let i = 0; i < json.length; i++) {
+        el += `<li>${json[i].name} | ${json[i].email}</li>`;
+    }
+    el += "</ul>";
+    card.innerHTML = el;
+  });

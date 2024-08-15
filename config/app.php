@@ -6,6 +6,10 @@ return array(
         "URL" => $_ENV['APP_URL'],
     ),
 
+    'CLOUDINARY' => array(
+        "URL" => $_ENV['CLOUDINARY_URL'],
+    ),
+
     'MAIL' => array(
         'M_HOST' => $_ENV['M_HOST'],
         'M_USERNAME' => $_ENV['M_USERNAME'],

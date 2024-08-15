@@ -227,7 +227,7 @@ body {
   display: block;
   padding: 10px 5px;
   box-sizing: border-box;
-  border: 1px solid #134597;
+  border: 1px solid rgb(19, 69, 151);
   border-radius: 5px;
   color: var(--cl-sd);
 }
@@ -250,7 +250,7 @@ body {
 }
 
 .btn-pr {
-  background-color: #134597;
+  background-color: rgb(19, 69, 151);
   color: var(--cl-pd);
 }
 
@@ -265,7 +265,7 @@ body {
   box-sizing: border-box;
 }
 
-.alert-warn::before, .alert-succ::before {
+.alert-error::before, .alert-success::before {
   content: "";
   width: 3px !important;
   height: 100%;
@@ -274,21 +274,21 @@ body {
   left: 0;
 }
 
-.alert-warn::before {
-  background-color: #e92b2b;
+.alert-error::before {
+  background-color: rgb(233, 43, 43);
 }
 
-.alert-warn {
-  color: #e92b2b;
+.alert-error {
+  color: rgb(233, 43, 43);
   background-color: rgba(233, 43, 43, 0.061);
 }
 
-.alert-succ::before {
-  background-color: #16cf25;
+.alert-success::before {
+  background-color: rgb(22, 207, 37);
 }
 
-.alert-succ {
-  color: #16cf25;
+.alert-success {
+  color: rgb(22, 207, 37);
   background-color: rgba(22, 207, 37, 0.061);
 }
 
@@ -305,7 +305,7 @@ body {
 }
 
 .card-bg-p {
-  background-color: #032d7a;
+  background-color: rgb(3, 45, 122);
   color: var(--cl-pd);
 }
 
@@ -411,3 +411,5 @@ body {
 .list-group-link > .link-1 > span {
   width: 70%;
 }
+
+/*# sourceMappingURL=app.bundle.css.map*/

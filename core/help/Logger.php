@@ -1,8 +1,8 @@
 <?php
 
-namespace core;
+namespace core\help;
 
-class Logger
+trait Logger
 {
     public static function error($message)
     {

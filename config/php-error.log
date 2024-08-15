@@ -1,0 +1,5 @@
+[12-Aug-2024 13:54:23 America/Guayaquil] Error: Failed on the line: 120 | PDOMessage: SQLSTATE[HY000]: General error: 1364 Field 'token' doesn't have a default value
+[12-Aug-2024 15:17:37 America/Guayaquil] Info: Class "app\controllers\AuthController" not found
+[12-Aug-2024 15:18:06 America/Guayaquil] Info: Failed opening required '/opt/lampp/htdocs/www/project-MVC/resources/views/error/error404.php' (include_path='.:/opt/lampp/lib/php')
+[12-Aug-2024 15:18:17 America/Guayaquil] Info: Failed opening required '/opt/lampp/htdocs/www/project-MVC/resources/views/error/error404.php' (include_path='.:/opt/lampp/lib/php')
+[12-Aug-2024 15:21:10 America/Guayaquil] Info: Call to undefined method app\controllers\ResetPasswordController::isGET()

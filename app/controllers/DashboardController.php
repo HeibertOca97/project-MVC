@@ -2,16 +2,18 @@
 
 namespace app\controllers;
 
+use app\middleware\AuthMiddleware;
+use app\middleware\HTTPRequestMiddleware;
 use core\Controller;
-use app\middleware\UserDataIsNotComplete;
 
 class DashboardController extends Controller
 {
     public function __construct()
     {
-        parent::__construct();
-        $this->Auth();
-        UserDataIsNotComplete::handle();
+        (new HTTPRequestMiddleware(['dashboard']))->handle([
+            'GET' => ['index']
+        ]);
+        (new AuthMiddleware)->handle(['index']);
     }
 
     public function index()
